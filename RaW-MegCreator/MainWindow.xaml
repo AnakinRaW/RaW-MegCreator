@@ -3,10 +3,22 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:RaW_MegCreator"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="MainWindow" Width="400" SizeToContent="Height" ResizeMode="NoResize">
+    <StackPanel Margin="12">
+        <TextBlock Text="Usage: Place this tool into FOC's root directory."/>
+        <Grid Margin="0,12,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="Output file:" Margin="0,0,6,0"/>
+            <TextBox Grid.Column="1" x:Name="FilePath"/>
+            <Button Grid.Column="2" Content="Browse..." HorizontalAlignment="Right" Margin="6,0,0,0"
+                    Click="Browse"/>
+        </Grid>
+        <Button Margin="0,12,0,0" Padding="12,0" Content="Create Meg" HorizontalAlignment="Center"
+                Click="CreateMeg"/>
+    </StackPanel>
 </Window>
