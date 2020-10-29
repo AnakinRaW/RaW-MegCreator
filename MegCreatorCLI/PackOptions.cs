@@ -5,7 +5,7 @@ namespace MegCreatorCLI
 {
     internal class PackOptions
     {
-        [Option('i', "inputLocations", Required = false, HelpText = "A list of file locations, which shall get packed.")]
+        [Option('i', "inputLocations", Required = false, HelpText = "A list of file locations, which shall get packed.", Separator = ';')]
         public IEnumerable<string> InputLocations { get; set; }
 
         [Option('o', "output", Required = true, HelpText = "The name of the .meg which will get created." + 

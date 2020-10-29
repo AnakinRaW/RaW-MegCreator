@@ -16,6 +16,9 @@ namespace MegCreatorCLI
             Parser.Default.ParseArguments<PackOptions>(args)
                 .WithParsed(ExecInternal)
                 .WithNotParsed(HandleParseErrorsInternal);
+#if DEBUG
+            Console.ReadKey();
+#endif
         }
 
         private static void ExecInternal(PackOptions opts)
@@ -26,7 +29,7 @@ namespace MegCreatorCLI
             Environment.ExitCode = application.Run();
         }
 
-        private static void ConfigureServices(IServiceCollection serviceCollection, PackOptions options)
+        private static void ConfigureServices(IServiceCollection serviceCollection, PackOptions packOptions)
         {
             serviceCollection.AddLogging(config =>
                 {
@@ -40,10 +43,10 @@ namespace MegCreatorCLI
 #if DEBUG
                     options.AddFilter<DebugLoggerProvider>(null, LogLevel.Trace);
 #endif
-                    options.AddFilter<ConsoleLoggerProvider>(null, LogLevel.Warning);
+                    options.AddFilter<ConsoleLoggerProvider>(null, LogLevel.Information);
                 });
             var lsp = serviceCollection.BuildServiceProvider();
-            serviceCollection.AddTransient<IPacker, Packer>(s => new Packer(options, lsp.GetService<ILoggerFactory>().CreateLogger<IPacker>()));
+            serviceCollection.AddTransient<IPacker, Packer>(s => new Packer(packOptions, lsp.GetService<ILoggerFactory>().CreateLogger<IPacker>()));
         }
 
         private static void HandleParseErrorsInternal(IEnumerable<Error> errs)
